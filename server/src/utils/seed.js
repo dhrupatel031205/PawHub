@@ -1,5 +1,5 @@
 import dotenv from 'dotenv';
-dotenv.config();
+dotenv.config({ override: true });
 
 import bcrypt from 'bcrypt';
 import { connectToDatabase } from '../lib/mongo.js';
