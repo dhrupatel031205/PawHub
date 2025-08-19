@@ -18,7 +18,7 @@ export default function RegisterPage() {
       toast({ title: 'Welcome to PawHub!' })
       navigate('/')
     } catch (e) {
-      toast({ title: 'Register failed', type: 'error' })
+      toast({ title: 'Register failed', message: e?.response?.data?.message || 'Please try again', type: 'error' })
     }
   }
 

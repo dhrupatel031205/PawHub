@@ -7,7 +7,9 @@ export default function AnimalsPage() {
   const [q, setQ] = useState('')
 
   useEffect(() => {
-    api.get('/api/animals').then((res) => setAnimals(res.data))
+    api.get('/api/animals')
+      .then((res) => setAnimals(res.data))
+      .catch(() => setAnimals([]))
   }, [])
 
   const filtered = animals.filter((a) => a.name.toLowerCase().includes(q.toLowerCase()))
@@ -19,6 +21,9 @@ export default function AnimalsPage() {
         <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search animals..." className="border px-3 py-2 rounded-md" />
       </div>
       <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6 mt-8">
+        {filtered.length === 0 && (
+          <div className="col-span-full text-center text-gray-500">No animals to display.</div>
+        )}
         {filtered.map((a) => (
           <Link key={a._id} to={`/animals/${a._id}`} className="rounded-2xl overflow-hidden shadow hover:shadow-lg transition bg-white">
             <img src={a.images?.[0] || 'https://placehold.co/600x400'} alt={a.name} className="h-44 w-full object-cover" />

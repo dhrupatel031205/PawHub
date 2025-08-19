@@ -4,12 +4,13 @@ import api from '../lib/api'
 export default function BlogsPage() {
   const [blogs, setBlogs] = useState([])
   useEffect(() => {
-    api.get('/api/blogs').then((res) => setBlogs(res.data))
+    api.get('/api/blogs').then((res) => setBlogs(res.data)).catch(() => setBlogs([]))
   }, [])
   return (
     <div className="max-w-6xl mx-auto px-4 py-10">
       <h1 className="text-2xl font-bold">Blogs & Pet Care</h1>
       <div className="grid md:grid-cols-2 gap-6 mt-6">
+        {blogs.length === 0 && <div className="text-gray-500">No blogs available.</div>}
         {blogs.map((b) => (
           <article key={b._id} className="rounded-2xl bg-white shadow p-5">
             <h3 className="font-semibold text-lg">{b.title}</h3>

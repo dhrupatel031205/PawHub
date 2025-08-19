@@ -6,7 +6,7 @@ export default function LostFoundPage() {
   const [type, setType] = useState('')
 
   useEffect(() => {
-    api.get('/api/lostfound', { params: { type } }).then((res) => setItems(res.data))
+    api.get('/api/lostfound', { params: { type } }).then((res) => setItems(res.data)).catch(() => setItems([]))
   }, [type])
 
   return (
@@ -20,6 +20,7 @@ export default function LostFoundPage() {
         </select>
       </div>
       <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6 mt-6">
+        {items.length === 0 && <div className="text-gray-500">No reports.</div>}
         {items.map((i) => (
           <div key={i._id} className="rounded-2xl overflow-hidden bg-white shadow">
             <img src={i.imageUrl || 'https://placehold.co/600x400'} alt={i.type} className="h-40 w-full object-cover" />

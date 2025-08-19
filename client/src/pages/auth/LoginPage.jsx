@@ -16,7 +16,7 @@ export default function LoginPage() {
       toast({ title: 'Welcome back!' })
       navigate('/')
     } catch (e) {
-      toast({ title: 'Login failed', type: 'error' })
+      toast({ title: 'Login failed', message: e?.response?.data?.message || 'Check credentials and API URL', type: 'error' })
     }
   }
 
