@@ -14,8 +14,21 @@ export async function createLostFound(req, res) {
   res.status(201).json(created);
 }
 
+export async function getLostFound(req, res) {
+  const item = await LostFound.findById(req.params.id);
+  if (!item) return res.status(404).json({ message: 'Not found' });
+  res.json(item);
+}
+
 export async function updateLostFound(req, res) {
   const item = await LostFound.findByIdAndUpdate(req.params.id, req.body, { new: true });
+  if (!item) return res.status(404).json({ message: 'Not found' });
   res.json(item);
+}
+
+export async function deleteLostFound(req, res) {
+  const item = await LostFound.findByIdAndDelete(req.params.id);
+  if (!item) return res.status(404).json({ message: 'Not found' });
+  res.json({ message: 'Deleted' });
 }
 

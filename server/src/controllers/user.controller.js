@@ -18,3 +18,15 @@ export async function listUsers(_req, res) {
   res.json(users);
 }
 
+export async function getUser(req, res) {
+  const user = await User.findById(req.params.id).select('-passwordHash');
+  if (!user) return res.status(404).json({ message: 'Not found' });
+  res.json(user);
+}
+
+export async function deleteUser(req, res) {
+  const user = await User.findByIdAndDelete(req.params.id);
+  if (!user) return res.status(404).json({ message: 'Not found' });
+  res.json({ message: 'User deleted' });
+}
+

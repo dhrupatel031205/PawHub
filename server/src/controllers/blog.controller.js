@@ -29,6 +29,18 @@ export async function likeBlog(req, res) {
   res.json(blog);
 }
 
+export async function getBlog(req, res) {
+  const item = await Blog.findById(req.params.id);
+  if (!item) return res.status(404).json({ message: 'Not found' });
+  res.json(item);
+}
+
+export async function deleteBlog(req, res) {
+  const item = await Blog.findByIdAndDelete(req.params.id);
+  if (!item) return res.status(404).json({ message: 'Not found' });
+  res.json({ message: 'Deleted' });
+}
+
 export async function commentBlog(req, res) {
   const { content } = req.body;
   const blog = await Blog.findById(req.params.id);
