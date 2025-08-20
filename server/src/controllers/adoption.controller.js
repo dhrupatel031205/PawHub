@@ -19,9 +19,21 @@ export async function requestAdoption(req, res) {
   res.json(adoption);
 }
 
+export async function getAdoption(req, res) {
+  const item = await Adoption.findById(req.params.id).populate('animalId');
+  if (!item) return res.status(404).json({ message: 'Not found' });
+  res.json(item);
+}
+
 export async function updateAdoptionStatus(req, res) {
   const { status } = req.body;
   const adoption = await Adoption.findByIdAndUpdate(req.params.id, { status }, { new: true });
   res.json(adoption);
+}
+
+export async function deleteAdoption(req, res) {
+  const item = await Adoption.findByIdAndDelete(req.params.id);
+  if (!item) return res.status(404).json({ message: 'Not found' });
+  res.json({ message: 'Deleted' });
 }
 
